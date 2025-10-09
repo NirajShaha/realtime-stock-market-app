@@ -7,6 +7,7 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { getStocksDetails } from './finnhub.actions';
+import { cleanStockSymbol } from '@/utils/stockUtils';
 
 export async function getWatchlistSymbolsByEmail(email: string): Promise<string[]> {
   if (!email) return [];
@@ -120,7 +121,7 @@ export const getWatchlistWithData = async () => {
 
     const stocksWithData = await Promise.all(
       watchlist.map(async (item) => {
-        const stockData = await getStocksDetails(item.symbol);
+        const stockData = await getStocksDetails(cleanStockSymbol(item.symbol));
 
         if (!stockData) {
           console.warn(`Failed to fetch data for ${item.symbol}`);

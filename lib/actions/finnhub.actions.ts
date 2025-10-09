@@ -182,8 +182,8 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
 
 // Fetch stock details by symbol
 export const getStocksDetails = cache(async (symbol: string) => {
-  const cleanSymbol = cleanStockSymbol(symbol); // Ensure the symbol is cleaned
-
+  const cleanSymbol = cleanStockSymbol(symbol);
+  
   try {
     const [quote, profile, financials] = await Promise.all([
       fetchJSON(
